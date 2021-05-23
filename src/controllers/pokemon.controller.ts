@@ -95,6 +95,12 @@ export class PokemonController {
     return this.pokemonRepository.findOne({where: {name}});
   }
 
+  @get('/pokemons/types')
+  @response(200)
+  async findTypes(): Promise<any> {
+    return this.pokemonRepository.execute('Pokemon', 'distinct', 'types');
+  }
+
   @patch('/pokemons')
   @response(200, {
     description: 'Pokemon PATCH success count',
