@@ -4,18 +4,22 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
+
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Pokemon} from '../models';
 import {PokemonRepository} from '../repositories';
@@ -23,10 +27,10 @@ import {PokemonRepository} from '../repositories';
 export class PokemonController {
   constructor(
     @repository(PokemonRepository)
-    public pokemonRepository : PokemonRepository,
-  ) {}
+    public pokemonRepository: PokemonRepository,
+  ) { }
 
-  @post('/pokemon')
+  @post('/pokemons')
   @response(200, {
     description: 'Pokemon model instance',
     content: {'application/json': {schema: getModelSchemaRef(Pokemon)}},
@@ -37,7 +41,7 @@ export class PokemonController {
         'application/json': {
           schema: getModelSchemaRef(Pokemon, {
             title: 'NewPokemon',
-            
+
           }),
         },
       },
@@ -47,7 +51,7 @@ export class PokemonController {
     return this.pokemonRepository.create(pokemon);
   }
 
-  @get('/pokemon/count')
+  @get('/pokemons/count')
   @response(200, {
     description: 'Pokemon model count',
     content: {'application/json': {schema: CountSchema}},
@@ -58,7 +62,7 @@ export class PokemonController {
     return this.pokemonRepository.count(where);
   }
 
-  @get('/pokemon')
+  @get('/pokemons')
   @response(200, {
     description: 'Array of Pokemon model instances',
     content: {
@@ -76,7 +80,7 @@ export class PokemonController {
     return this.pokemonRepository.find(filter);
   }
 
-  @patch('/pokemon')
+  @patch('/pokemons')
   @response(200, {
     description: 'Pokemon PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -95,7 +99,7 @@ export class PokemonController {
     return this.pokemonRepository.updateAll(pokemon, where);
   }
 
-  @get('/pokemon/{id}')
+  @get('/pokemons/{id}')
   @response(200, {
     description: 'Pokemon model instance',
     content: {
@@ -111,7 +115,7 @@ export class PokemonController {
     return this.pokemonRepository.findById(id, filter);
   }
 
-  @patch('/pokemon/{id}')
+  @patch('/pokemons/{id}')
   @response(204, {
     description: 'Pokemon PATCH success',
   })
@@ -129,7 +133,7 @@ export class PokemonController {
     await this.pokemonRepository.updateById(id, pokemon);
   }
 
-  @put('/pokemon/{id}')
+  @put('/pokemons/{id}')
   @response(204, {
     description: 'Pokemon PUT success',
   })
@@ -140,7 +144,7 @@ export class PokemonController {
     await this.pokemonRepository.replaceById(id, pokemon);
   }
 
-  @del('/pokemon/{id}')
+  @del('/pokemons/{id}')
   @response(204, {
     description: 'Pokemon DELETE success',
   })
