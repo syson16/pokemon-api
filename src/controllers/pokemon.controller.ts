@@ -80,6 +80,21 @@ export class PokemonController {
     return this.pokemonRepository.find(filter);
   }
 
+  @get('/pokemons/names/{name}')
+  @response(200, {
+    description: 'Pokemon model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Pokemon, {includeRelations: true}),
+      },
+    },
+  })
+  async findByName(
+    @param.path.string('name') name: string,
+  ): Promise<Pokemon | null> {
+    return this.pokemonRepository.findOne({where: {name}});
+  }
+
   @patch('/pokemons')
   @response(200, {
     description: 'Pokemon PATCH success count',
