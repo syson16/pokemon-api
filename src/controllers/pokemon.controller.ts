@@ -4,22 +4,18 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where
+  Where,
 } from '@loopback/repository';
 import {
-  del, get,
-  getModelSchemaRef, param,
-
-
-  patch, post,
-
-
-
-
+  del,
+  get,
+  getModelSchemaRef,
+  param,
+  patch,
+  post,
   put,
-
   requestBody,
-  response
+  response,
 } from '@loopback/rest';
 import {Pokemon} from '../models';
 import {PokemonRepository} from '../repositories';
@@ -28,7 +24,7 @@ export class PokemonController {
   constructor(
     @repository(PokemonRepository)
     public pokemonRepository: PokemonRepository,
-  ) { }
+  ) {}
 
   @post('/pokemons')
   @response(200, {
@@ -41,7 +37,6 @@ export class PokemonController {
         'application/json': {
           schema: getModelSchemaRef(Pokemon, {
             title: 'NewPokemon',
-
           }),
         },
       },
@@ -56,9 +51,7 @@ export class PokemonController {
     description: 'Pokemon model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Pokemon) where?: Where<Pokemon>,
-  ): Promise<Count> {
+  async count(@param.where(Pokemon) where?: Where<Pokemon>): Promise<Count> {
     return this.pokemonRepository.count(where);
   }
 
@@ -97,7 +90,7 @@ export class PokemonController {
 
   @get('/pokemons/types')
   @response(200)
-  async findTypes(): Promise<any> {
+  async findTypes(): Promise<Object> {
     return this.pokemonRepository.execute('Pokemon', 'distinct', 'types');
   }
 
@@ -131,7 +124,8 @@ export class PokemonController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Pokemon, {exclude: 'where'}) filter?: FilterExcludingWhere<Pokemon>
+    @param.filter(Pokemon, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Pokemon>,
   ): Promise<Pokemon> {
     return this.pokemonRepository.findById(id, filter);
   }

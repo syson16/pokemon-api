@@ -8,9 +8,7 @@ export class PokemonRepository extends DefaultCrudRepository<
   typeof Pokemon.prototype._id,
   PokemonRelations
 > {
-  constructor(
-    @inject('datasources.mongodb') dataSource: MongodbDataSource,
-  ) {
+  constructor(@inject('datasources.mongodb') dataSource: MongodbDataSource) {
     super(Pokemon, dataSource);
   }
 }
